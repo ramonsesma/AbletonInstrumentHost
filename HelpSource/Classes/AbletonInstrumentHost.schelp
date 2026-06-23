@@ -1,0 +1,127 @@
+CLASS:: AbletonInstrumentHost
+SUMMARY:: Facade for VSTPlugin-oriented instrument hosting, tempo/link state, presets, automation, and export planning.
+DESCRIPTION::
+AbletonInstrumentHost is a small public facade for organizing performable instrument sessions from SuperCollider. It is designed for live coding and structured composition. It does not replace Ableton Live or implement a full DAW.
+
+The class compiles without optional VSTPlugin dependencies. Capability checks use dynamic symbol lookup, and calls that require unavailable dependencies keep structured state and report degraded operation.
+
+METHOD:: start
+ARGUMENT:: config
+Start a fresh host session. Common config keys are code::bpm::, code::beatsPerBar::, and code::clock::.
+RETURNS:: Result dictionary with code::ok::, code::running::, code::sync::, and code::capabilities::.
+
+METHOD:: stop
+Stop the host session and clear transient clock/link state.
+RETURNS:: Result dictionary with code::ok:: and code::running::.
+
+METHOD:: status
+Return a snapshot of running state, config, capabilities, sync state, tracks, snapshots, and export plans.
+RETURNS:: Dictionary.
+
+METHOD:: capabilities
+Inspect available optional classes and features.
+RETURNS:: Dictionary with code::environment::, code::classes::, code::features::, code::server::, code::warnings::, and code::errors::.
+
+METHOD:: loadPlugin
+ARGUMENT:: trackId
+Symbol or string identifying the track.
+ARGUMENT:: pluginSpec
+Dictionary describing plugin intent. Useful keys include code::path::, code::outputs::, code::editor::, and code::controller::.
+When VSTPlugin is installed, v1 can use a supplied code::controller:: or create one from a supplied code::synth::. Without either, it stores intent and reports degraded state.
+RETURNS:: Result dictionary with track state. If VSTPlugin is missing, the result is degraded but still ok.
+
+METHOD:: unloadPlugin
+ARGUMENT:: trackId
+Remove a track from the registry and close the controller when one exists.
+RETURNS:: Result dictionary.
+
+METHOD:: loadPreset
+ARGUMENT:: trackId
+ARGUMENT:: presetSpec
+Dictionary with code::name::, code::path::, code::bank::, code::program::, and code::meta::.
+RETURNS:: Result dictionary with normalized preset state.
+
+METHOD:: saveSnapshot
+ARGUMENT:: name
+Save named session state including tracks, params, presets, automation, sync, and export plans.
+RETURNS:: Result dictionary with the snapshot.
+
+METHOD:: restoreSnapshot
+ARGUMENT:: name
+Restore a named snapshot.
+RETURNS:: Result dictionary.
+
+METHOD:: noteOn
+ARGUMENT:: trackId
+ARGUMENT:: note
+ARGUMENT:: vel
+ARGUMENT:: chan
+Record and optionally send a MIDI note-on event.
+RETURNS:: Result dictionary with code::event::.
+
+METHOD:: noteOff
+ARGUMENT:: trackId
+ARGUMENT:: note
+ARGUMENT:: chan
+Record and optionally send a MIDI note-off event.
+RETURNS:: Result dictionary with code::event::.
+
+METHOD:: cc
+ARGUMENT:: trackId
+ARGUMENT:: cc
+ARGUMENT:: value
+ARGUMENT:: chan
+Record and optionally send a MIDI CC event.
+RETURNS:: Result dictionary with code::event::.
+
+METHOD:: setParam
+ARGUMENT:: trackId
+ARGUMENT:: param
+ARGUMENT:: value
+Set a track parameter in registry state and on the controller when available.
+RETURNS:: Result dictionary with code::event::.
+
+METHOD:: automate
+ARGUMENT:: trackId
+ARGUMENT:: automationSpec
+Create an automation plan with code::param:: or code::cc::, code::points::, code::curve::, and code::clock::.
+RETURNS:: Result dictionary with code::plan::.
+
+METHOD:: setTempo
+ARGUMENT:: bpm
+Update session tempo.
+RETURNS:: Result dictionary with code::bpm:: and code::sync::.
+
+METHOD:: linkStart
+Start optional Ableton Link synchronization when available.
+RETURNS:: Result dictionary with code::link:: and code::sync::.
+
+METHOD:: linkStop
+Stop optional Link state.
+RETURNS:: Result dictionary with code::link:: and code::sync::.
+
+METHOD:: exportStemPlan
+ARGUMENT:: spec
+Create a structured stem export plan. Useful keys: code::tracks::, code::bars::, code::format::, code::destination::.
+RETURNS:: Result dictionary with code::plan::.
+
+METHOD:: exportScorePlan
+ARGUMENT:: spec
+Create a structured score export plan. Useful keys: code::tracks::, code::bars::, code::format::, code::notation::.
+RETURNS:: Result dictionary with code::plan::.
+
+METHOD:: report
+ARGUMENT:: item
+Format a result or status dictionary as a compile string.
+RETURNS:: String.
+
+EXAMPLES::
+code::
+AbletonInstrumentHost.start((bpm: 124));
+AbletonInstrumentHost.loadPlugin(\keys, (path: "Piano.vst3"));
+AbletonInstrumentHost.noteOn(\keys, 60, 100);
+AbletonInstrumentHost.setParam(\keys, \cutoff, 0.5);
+AbletonInstrumentHost.saveSnapshot(\verse);
+AbletonInstrumentHost.exportStemPlan((tracks: [\keys], bars: 16));
+AbletonInstrumentHost.stop;
+::

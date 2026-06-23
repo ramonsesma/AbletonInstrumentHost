@@ -1,0 +1,12 @@
+(
+    name: "AbletonInstrumentHost",
+    summary: "Small SuperCollider facade for VSTPlugin tracks, tempo/link state, presets, automation, and export planning.",
+    version: "0.1.0",
+    schelp: "AbletonInstrumentHost",
+    isCompatible: { true },
+    dependencies: [],
+    author: "Studio Sesma",
+    url: "https://github.com/studio-sesma/AbletonInstrumentHost",
+    license: "MIT"
+)
+
