@@ -33,6 +33,12 @@ AbletonInstrumentHost.exportScorePlan((tracks: [\keys], format: \lilypond));
 AbletonInstrumentHost.stop;
 ```
 
+## Install
+
+```supercollider
+Quarks.install("https://github.com/ramonsesma/AbletonInstrumentHost");
+```
+
 ## Public API
 
 - `AbletonInstrumentHost.start(config)`
@@ -104,7 +110,7 @@ AbletonInstrumentHost.exportScorePlan((
 Run from the repository root:
 
 ```powershell
-& 'C:\Program Files\SuperCollider-3.14.1\sclang.exe' -D -r -s --include-path 'quarks\AbletonInstrumentHost\Classes' --include-path 'quarks\AbletonInstrumentHost\tests' 'quarks\AbletonInstrumentHost\tests\RunAbletonInstrumentHost.scd'
+& 'C:\Program Files\SuperCollider-3.14.1\sclang.exe' -D -r -s --include-path 'Classes' --include-path 'tests' 'tests\RunAbletonInstrumentHost.scd'
 ```
 
 Or inside sclang after loading the Quark classes:

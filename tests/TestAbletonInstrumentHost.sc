@@ -1,5 +1,5 @@
 // Run from PowerShell with:
-//   & 'C:\Program Files\SuperCollider-3.14.1\sclang.exe' -D -r -s --include-path 'quarks\AbletonInstrumentHost\Classes' --include-path 'quarks\AbletonInstrumentHost\tests' 'quarks\AbletonInstrumentHost\tests\RunAbletonInstrumentHost.scd'
+//   & 'C:\Program Files\SuperCollider-3.14.1\sclang.exe' -D -r -s --include-path 'Classes' --include-path 'tests' 'tests\RunAbletonInstrumentHost.scd'
 
 TestAbletonInstrumentHost : UnitTest {
 
@@ -223,27 +223,27 @@ TestAbletonInstrumentHost : UnitTest {
         var readme;
         var help;
         var quark;
-        var index;
 
-        this.assert(File.exists("quarks/AbletonInstrumentHost/README.md"));
-        this.assert(File.exists("quarks/AbletonInstrumentHost/HelpSource/Classes/AbletonInstrumentHost.schelp"));
-        this.assert(File.exists("quarks/AbletonInstrumentHost/AbletonInstrumentHost.quark"));
+        this.assert(File.exists("README.md"));
+        this.assert(File.exists("HelpSource/Classes/AbletonInstrumentHost.schelp"));
+        this.assert(File.exists("AbletonInstrumentHost.quark"));
 
-        readme = File.readAllString("quarks/AbletonInstrumentHost/README.md");
-        help = File.readAllString("quarks/AbletonInstrumentHost/HelpSource/Classes/AbletonInstrumentHost.schelp");
-        quark = File.readAllString("quarks/AbletonInstrumentHost/AbletonInstrumentHost.quark");
-        index = File.readAllString("quarks/README.md");
+        readme = File.readAllString("README.md");
+        help = File.readAllString("HelpSource/Classes/AbletonInstrumentHost.schelp");
+        quark = File.readAllString("AbletonInstrumentHost.quark");
 
         this.assert(readme.find("# AbletonInstrumentHost").notNil);
         this.assert(readme.find("## Quick Start").notNil);
+        this.assert(readme.find("## Install").notNil);
         this.assert(readme.find("## Degradation Model").notNil);
         this.assert(readme.find("## Export Planning").notNil);
         this.assert(readme.find("AbletonInstrumentHost.start").notNil);
+        this.assert(readme.find("ramonsesma/AbletonInstrumentHost").notNil);
         this.assert(help.find("CLASS:: AbletonInstrumentHost").notNil);
         this.assert(help.find("METHOD:: start").notNil);
         this.assert(help.find("METHOD:: exportScorePlan").notNil);
         this.assert(quark.find("AbletonInstrumentHost").notNil);
-        this.assert(index.find("AbletonInstrumentHost").notNil);
+        this.assert(quark.find("ramonsesma/AbletonInstrumentHost").notNil);
     }
 }
 

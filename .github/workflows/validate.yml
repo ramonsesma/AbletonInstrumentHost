@@ -1,0 +1,24 @@
+name: Validate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SuperCollider
+        shell: powershell
+        run: choco install supercollider --yes --no-progress
+
+      - name: Run UnitTests
+        shell: powershell
+        run: |
+          & 'C:\Program Files\SuperCollider-3.14.1\sclang.exe' -D -r -s --include-path 'Classes' --include-path 'tests' 'tests\RunAbletonInstrumentHost.scd'
