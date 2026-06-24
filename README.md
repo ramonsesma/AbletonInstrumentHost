@@ -1,5 +1,8 @@
 # AbletonInstrumentHost
 
+[![Release](https://img.shields.io/github/v/release/ramonsesma/AbletonInstrumentHost)](https://github.com/ramonsesma/AbletonInstrumentHost/releases)
+[![Validate](https://img.shields.io/github/actions/workflow/status/ramonsesma/AbletonInstrumentHost/validate.yml?branch=main&label=validate)](https://github.com/ramonsesma/AbletonInstrumentHost/actions/workflows/validate.yml)
+
 `AbletonInstrumentHost` is a public, self-contained SuperCollider Quark for organizing instrument hosting workflows around `VSTPlugin`, tempo sync, Ableton Link, presets, snapshots, automation, and export planning.
 
 It does not replace Ableton Live. It gives SuperCollider a small, performable, programmable layer for instrument/session state so live coding and structured composition can share the same track registry and planning vocabulary.
