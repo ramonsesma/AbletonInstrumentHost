@@ -43,4 +43,24 @@ jobs:
 
           $configLines | Set-Content -LiteralPath $configPath -Encoding ascii
 
-          & $sclang -l $configPath -r -s 'tests\RunAbletonInstrumentHost.scd'
+          $logPath = Join-Path $env:RUNNER_TEMP 'sclang-validate.log'
+          $output = & $sclang -l $configPath -r -s 'tests\RunAbletonInstrumentHost.scd' 2>&1
+          $exitCode = $LASTEXITCODE
+          $output | Tee-Object -FilePath $logPath
+          $outputText = ($output | ForEach-Object { "$_" }) -join "`n"
+
+          if ($outputText -match 'There were failures') {
+            throw 'SuperCollider UnitTest suite reported failures.'
+          }
+
+          if ($outputText -match 'FAIL:') {
+            throw 'SuperCollider reported one or more FAIL lines.'
+          }
+
+          if ($outputText -notmatch 'There were no failures') {
+            throw 'Could not verify a clean SuperCollider UnitTest summary.'
+          }
+
+          if ($exitCode -ne 0) {
+            Write-Warning "sclang exited with code $exitCode after a clean UnitTest run; treating this Windows CI shutdown as non-fatal."
+          }
