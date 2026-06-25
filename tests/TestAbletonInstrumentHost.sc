@@ -220,17 +220,26 @@ TestAbletonInstrumentHost : UnitTest {
     }
 
     test_documentation_smoke_check {
+        var root;
+        var readmePath;
+        var helpPath;
+        var quarkPath;
         var readme;
         var help;
         var quark;
 
-        this.assert(File.exists("README.md"));
-        this.assert(File.exists("HelpSource/Classes/AbletonInstrumentHost.schelp"));
-        this.assert(File.exists("AbletonInstrumentHost.quark"));
+        root = PathName(this.class.filenameSymbol.asString).pathOnly.dirname;
+        readmePath = root +/+ "README.md";
+        helpPath = root +/+ "HelpSource/Classes/AbletonInstrumentHost.schelp";
+        quarkPath = root +/+ "AbletonInstrumentHost.quark";
 
-        readme = File.readAllString("README.md");
-        help = File.readAllString("HelpSource/Classes/AbletonInstrumentHost.schelp");
-        quark = File.readAllString("AbletonInstrumentHost.quark");
+        this.assert(File.exists(readmePath));
+        this.assert(File.exists(helpPath));
+        this.assert(File.exists(quarkPath));
+
+        readme = File.readAllString(readmePath);
+        help = File.readAllString(helpPath);
+        quark = File.readAllString(quarkPath);
 
         this.assert(readme.find("# AbletonInstrumentHost").notNil);
         this.assert(readme.find("## Quick Start").notNil);

@@ -1,9 +1,11 @@
-# AbletonInstrumentHost
+﻿# AbletonInstrumentHost
+
+![SuperCollider Quarks cover](assets/supercollider-quarks-cover.png)
 
 [![Release](https://img.shields.io/github/v/release/ramonsesma/AbletonInstrumentHost)](https://github.com/ramonsesma/AbletonInstrumentHost/releases)
 [![Validate](https://img.shields.io/github/actions/workflow/status/ramonsesma/AbletonInstrumentHost/validate.yml?branch=main&label=validate)](https://github.com/ramonsesma/AbletonInstrumentHost/actions/workflows/validate.yml)
-[![License](https://img.shields.io/github/license/ramonsesma/AbletonInstrumentHost)](https://github.com/ramonsesma/AbletonInstrumentHost/blob/main/AbletonInstrumentHost.quark)
-[![Quark Version](https://img.shields.io/badge/quark-0.1.1-blue)](https://github.com/ramonsesma/AbletonInstrumentHost/releases/tag/0.1.1)
+[![License](https://img.shields.io/github/license/ramonsesma/AbletonInstrumentHost)](https://github.com/ramonsesma/AbletonInstrumentHost/blob/main/LICENSE)
+[![Quark](https://img.shields.io/badge/quark-0.1.2-blue)](https://github.com/ramonsesma/AbletonInstrumentHost/releases/tag/0.1.2)
 
 `AbletonInstrumentHost` is a public, self-contained SuperCollider Quark for organizing instrument hosting workflows around `VSTPlugin`, tempo sync, Ableton Link, presets, snapshots, automation, and export planning.
 
@@ -125,3 +127,4 @@ TestAbletonInstrumentHost.run;
 ```
 
 License: MIT.
+
