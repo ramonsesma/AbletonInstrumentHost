@@ -26,9 +26,20 @@ jobs:
             ForEach-Object { Join-Path $_.FullName 'sclang.exe' } |
             Where-Object { Test-Path $_ } |
             Select-Object -First 1
+          $configPath = Join-Path $env:RUNNER_TEMP 'sclang_conf.yaml'
 
           if (-not $sclang) {
             throw 'Unable to locate sclang.exe under C:\Program Files.'
           }
 
-          & $sclang -D -r -s --include-path 'Classes' --include-path 'tests' 'tests\RunAbletonInstrumentHost.scd'
+          @"
+includePaths:
+    -   $env:GITHUB_WORKSPACE\Classes
+    -   $env:GITHUB_WORKSPACE\tests
+excludePaths:
+    []
+postInlineWarnings: false
+excludeDefaultPaths: false
+"@ | Set-Content -LiteralPath $configPath -Encoding ascii
+
+          & $sclang -l $configPath -r -s 'tests\RunAbletonInstrumentHost.scd'
