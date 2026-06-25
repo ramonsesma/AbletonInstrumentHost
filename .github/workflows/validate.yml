@@ -21,4 +21,14 @@ jobs:
       - name: Run UnitTests
         shell: powershell
         run: |
-          & 'C:\Program Files\SuperCollider-3.14.1\sclang.exe' -D -r -s --include-path 'Classes' --include-path 'tests' 'tests\RunAbletonInstrumentHost.scd'
+          $sclang = Get-ChildItem 'C:\Program Files' -Directory -Filter 'SuperCollider*' |
+            Sort-Object Name -Descending |
+            ForEach-Object { Join-Path $_.FullName 'sclang.exe' } |
+            Where-Object { Test-Path $_ } |
+            Select-Object -First 1
+
+          if (-not $sclang) {
+            throw 'Unable to locate sclang.exe under C:\Program Files.'
+          }
+
+          & $sclang -D -r -s --include-path 'Classes' --include-path 'tests' 'tests\RunAbletonInstrumentHost.scd'
